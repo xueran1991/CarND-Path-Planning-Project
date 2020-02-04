@@ -16,17 +16,14 @@ The max jerk is 10m/s3 and the max acceleration is 10m/s2. My thought is make th
 
 #### 2. Determine to keep lane, lane change left or lane change right
 
-The car can choose to change lane or keep to follow fromt car when other cars are in front of my car in the same lane. If there's a slow car in front and lane change is not feasible, the car must follow and speed down to avoid collision. If no car in next lane around my car, then a lane change is feasiable.
-
-
+The car can choose to change lane or keep to follow front car when other cars are in front of my car in the same lane. If there's a slow car in front and lane change is not feasible, the car must follow and speed down to avoid collision. If no car in next lane around my car, then a lane change is feasiable.
 
 
 #### 3. Conclusion and further improvement
 
-The car can drive itself with the limitations and implement a lane change if feasiable. The car would always drive close to the max velocity unless the trafifce is in a jam.
+The car can drive itself with the limitations and implement a lane change if feasiable. The car would always drive close to the max velocity unless the traffi is in a jam.
 
 There are ways to improve the car's performance. I didn't implement a strict FSM and cost function for lane changing. The car is too conservative when choosing whether to implement a lane change, like a novice driver.
-Novice
 
 
 Below is Udacity's original README for the project repo
