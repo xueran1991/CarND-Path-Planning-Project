@@ -8,7 +8,6 @@
 #include "helpers.h"
 #include "json.hpp"
 #include "spline.h"
-//#include <math.h>
 
 // for convenience
 using nlohmann::json;
@@ -122,7 +121,6 @@ int main() {
           double cur_car_speed = car_speed * 1.61/3.6;	// Convert from mph to m/s 
           						// It's a little different with the ref_vel
           // FSM: KL, LCL, LCR
-          bool too_close = 0;
           double target_vel = max_vel;
           
           vector<bool> LC_feasibility = checkCL_feasibility(sensor_fusion, car_s, car_d, lane, ref_vel);
@@ -244,7 +242,7 @@ int main() {
             // Take a anchor point in Frenet every 'anchor_point_interval' of s value
             double next_anchor_s = car_s + anchor_point_interval*i;
             // If car is going to implement LC, the anchor points space evenly between current lane and next lane
-            //next_anchor_d += (lane - previous_lane)*4/3*i;
+            //next_anchor_d += (lane - previous_lane)*4/3*i; //Try to smooth the trajectory when implentment a LC 
             next_anchor_d = lane*4+2;           
             vector<double> anchor_point = getXY(next_anchor_s, next_anchor_d, 
                                                 map_waypoints_s, map_waypoints_x, map_waypoints_y);
