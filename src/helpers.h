@@ -8,6 +8,8 @@
 // for convenience
 using std::string;
 using std::vector;
+using std::cout;
+using std::endl;
 
 // Checks if the SocketIO event has JSON data.
 // If there is data the JSON object in string format will be returned,
@@ -152,6 +154,51 @@ vector<double> getXY(double s, double d, const vector<double> &maps_s,
   double y = seg_y + d*sin(perp_heading);
 
   return {x,y};
+}
+
+vector<bool> checkCL_feasibility(vector< vector<double> > sensor_fusion, double car_s, double car_d, int lane, double ref_vel){
+  // Check every lane's traffic
+  // If no car's within car's safty distance range when changing lanes, set LC feasibility to 1
+  double safty_dist_front = 20;
+  double safty_dist_back = 10;
+  
+  vector<int> lane0_car;
+  vector<int> lane1_car;
+  vector<int> lane2_car;
+  
+  vector<bool> CL_feasibility(3);
+  
+  for(auto ocar: sensor_fusion){
+  	//sensor_fusion: 0:id, 1:x, 2:y, 3:vx, 4:vy, 5:s, 6:d
+    //sensor_fusion.size always equals 12
+    
+    double ocar_s = ocar[5];
+    double ocar_d = ocar[6];
+    //cout << "car_s: " << car_s << "\tocar_s" << ocar_s << endl;
+    
+    if(ocar_s>car_s-safty_dist_back && ocar_s<car_s+safty_dist_front){
+      // cars within safty LC distance
+      if(ocar_d>=0 && ocar_d<4){
+      	// Lane 0
+        lane0_car.push_back(ocar[0]);
+      }
+      if(ocar_d>=4 && ocar_d<8){
+      	// Lane 1
+        lane1_car.push_back(ocar[0]);
+      }
+      if(ocar_d>=8){
+      	// Lane 2
+        lane2_car.push_back(ocar[0]);
+      }
+    }
+    //
+    CL_feasibility[0] = (lane0_car.size() == 0) && (lane != 0);
+	CL_feasibility[1] = (lane1_car.size() == 0) && (lane != 1);
+    CL_feasibility[2] = (lane2_car.size() == 0) && (lane != 2);
+	
+    
+  }
+  return CL_feasibility;
 }
 
 #endif  // HELPERS_H
