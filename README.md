@@ -1,3 +1,35 @@
+# CarND-Path-Planning-Project 
+Self-Driving Car Engineer Nanodegree Program
+
+## Writeup
+### Task and Goal
+The goal is to design a path planner that is able to create smooth, safe paths for the car to follow along a 3 lane highway with traffic. A successful path planner will be able to keep inside its lane, avoid hitting other cars, and pass slower moving traffic all by using localization, sensor fusion, and map data.
+
+### Implementation
+#### 1. Generate smooth trajectories
+
+The car follow each one the waypoints in every cycle. The car's velocity, acceleration, jerk and lane are all dependent on the trajectories which are formed by way points. In Frenet coordinate, set the d with a condtant value, the car is always in the same lane. I take 3 anchor points with 50m, 100m, 150m in s increasement of car's current s value and 2 previous waypoints to make the car move smooth when trajectories refreshed.
+
+Ways points are in global Cartesian coordinate. 5 anchor points are convert from Frenet to global Cartesian coordinate. Then I use the spline to interpolate other waypoints. The x increasement of each waypoint is how far the car should move in one cycle. That's car's wanted velocity times 0.02s.
+
+The max jerk is 10m/s3 and the max acceleration is 10m/s2. My thought is make the car's accelerate change with the max jerk and make the car's velocity change with the acceleration(acceleration += max jerk * dt, velocity += acceleration * dt, dt=0.2s). However, when I implemented this, the simulator showed jerk was only around 1m/s3 when the car in the same lane. At last I change the code to let the car speed up or down at 0.02 * 10 * 2 m/s2, the car can still go within the jerk limit.
+
+#### 2. Determine to keep lane, lane change left or lane change right
+
+The car can choose to change lane or keep to follow fromt car when other cars are in front of my car in the same lane. If there's a slow car in front and lane change is not feasible, the car must follow and speed down to avoid collision. If no car in next lane around my car, then a lane change is feasiable.
+
+
+
+
+#### 3. Conclusion and further improvement
+
+The car can drive itself with the limitations and implement a lane change if feasiable. The car would always drive close to the max velocity unless the trafifce is in a jam.
+
+There are ways to improve the car's performance. I didn't implement a strict FSM and cost function for lane changing. The car is too conservative when choosing whether to implement a lane change, like a novice driver.
+Novice
+
+
+Below is Udacity's original README for the project repo
 -------------------------------------
 
 # CarND-Path-Planning-Project
