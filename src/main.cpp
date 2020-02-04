@@ -113,7 +113,7 @@ int main() {
            * TODO: define a path made up of (x,y) points that the car will visit
            *   sequentially every .02 seconds
            */
-          double max_vel = 69.0*1.61/3.6;	// Maximum velocity in m/s of the car
+          double max_vel = 49.0*1.61/3.6;	// Maximum velocity in m/s of the car
   		  double max_acc = 10.0;	// Maximum acceleration in m/s2 of the car
   		  double max_jerk = 10.0;	// Maximum jerk of the car in m/s3
   		  double dt = 0.02;			// Time for 1 cycle
@@ -163,7 +163,7 @@ int main() {
             cout << "Too close; cars in front: " << same_lane_cars_vel.size() << endl;
             too_close = 1;
             //sort(same_lane_cars_vel.begin(), same_lane_cars_vel.end());
-            target_vel = same_lane_cars_vel[0]*0.9;
+            target_vel = same_lane_cars_vel[0];
             // Implentment a LC
             if(lane==0 && LC_feasibility[1]==1){
               //To the middle lane
@@ -188,11 +188,11 @@ int main() {
             target_vel = max_vel;
           }          
           
-		  // Velocity control
+	  // Velocity control
           if (ref_vel < target_vel){
-          	ref_vel += 0.224;
+          	ref_vel += max_acc*dt*2;
           }else if(ref_vel > target_vel){
-          	ref_vel -= 0.224;
+          	ref_vel -= max_acc*dt*2;
             cout << "Speed down --- ";
           }
          
@@ -244,8 +244,8 @@ int main() {
             // Take a anchor point in Frenet every 'anchor_point_interval' of s value
             double next_anchor_s = car_s + anchor_point_interval*i;
             // If car is going to implement LC, the anchor points space evenly between current lane and next lane
-            next_anchor_d += (lane - previous_lane)*4/3*i;
-                        
+            //next_anchor_d += (lane - previous_lane)*4/3*i;
+            next_anchor_d = lane*4+2;           
             vector<double> anchor_point = getXY(next_anchor_s, next_anchor_d, 
                                                 map_waypoints_s, map_waypoints_x, map_waypoints_y);
             anchor_points_x.push_back(anchor_point[0]);

@@ -159,7 +159,7 @@ vector<double> getXY(double s, double d, const vector<double> &maps_s,
 vector<bool> checkCL_feasibility(vector< vector<double> > sensor_fusion, double car_s, double car_d, int lane, double ref_vel){
   // Check every lane's traffic
   // If no car's within car's safty distance range when changing lanes, set LC feasibility to 1
-  double safty_dist_front = 20;
+  double safty_dist_front = 30;
   double safty_dist_back = 10;
   
   vector<int> lane0_car;
