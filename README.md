@@ -8,7 +8,7 @@ The goal is to design a path planner that is able to create smooth, safe paths f
 ### Implementation
 #### 1. Generate smooth trajectories
 
-The car follow each one the waypoints in every cycle. The car's velocity, acceleration, jerk and lane are all dependent on the trajectories which are formed by way points. In Frenet coordinate, set the d with a condtant value, the car is always in the same lane. I take 3 anchor points with 50m, 100m, 150m in s increasement of car's current s value and 2 previous waypoints to make the car move smooth when trajectories refreshed.
+The car follow each one the waypoints in every cycle. The car's velocity, acceleration, jerk and lane are all dependent on the trajectories which are formed by way points. In Frenet coordinate, set the d with a condtant value, the car is always in the same lane. I take 3 anchor points with 50m, 100m, 150m in s increasement of car's current s value and 2 previous waypoints to make the car move smooth when trajectories refreshed. The method to keep trajectories smooth is learnt from  David and Aron mentioned in https://www.youtube.com/watch?v=7sI3VHFPP0w&feature=youtu.be.
 
 Ways points are in global Cartesian coordinate. 5 anchor points are convert from Frenet to global Cartesian coordinate. Then I use the spline to interpolate other waypoints. The x increasement of each waypoint is how far the car should move in one cycle. That's car's wanted velocity times 0.02s.
 
