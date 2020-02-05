@@ -159,7 +159,7 @@ int main() {
           
           if(same_lane_cars_vel.size() > 0){
             cout << "Too close; cars in front: " << same_lane_cars_vel.size() << endl;
-            too_close = 1;
+      
             //sort(same_lane_cars_vel.begin(), same_lane_cars_vel.end());
             target_vel = same_lane_cars_vel[0];
             // Implentment a LC
@@ -182,7 +182,7 @@ int main() {
             }            
             
           }else{
-            too_close = 0;
+            
             target_vel = max_vel;
           }          
           
