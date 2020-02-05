@@ -110,9 +110,9 @@ int main() {
            * TODO: define a path made up of (x,y) points that the car will visit
            *   sequentially every .02 seconds
              */
-          double max_vel = 49.0*1.61/3.6;	// Maximum velocity in m/s of the car
-    		  double max_acc = 10.0;	// Maximum acceleration in m/s2 of the car
-    		  double max_jerk = 10.0;	// Maximum jerk of the car in m/s3
+          double max_vel = 48.0*1.61/3.6;	// Maximum velocity in m/s of the car
+    		  double max_acc = 9.0;	// Maximum acceleration in m/s2 of the car
+    		  double max_jerk = 9.0;	// Maximum jerk of the car in m/s3
     		  double dt = 0.02;			// Time for 1 cycle
           int previous_lane = lane;
           
