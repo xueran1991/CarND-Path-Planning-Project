@@ -32,8 +32,6 @@ int main() {
   // The max s value before wrapping around the track back to 0
   double max_s = 6945.554;
   
-
-  
   
   std::ifstream in_map_(map_file_.c_str(), std::ifstream::in);
 
@@ -111,15 +109,16 @@ int main() {
           /**
            * TODO: define a path made up of (x,y) points that the car will visit
            *   sequentially every .02 seconds
-           */
+             */
           double max_vel = 49.0*1.61/3.6;	// Maximum velocity in m/s of the car
-  		  double max_acc = 10.0;	// Maximum acceleration in m/s2 of the car
-  		  double max_jerk = 10.0;	// Maximum jerk of the car in m/s3
-  		  double dt = 0.02;			// Time for 1 cycle
+    		  double max_acc = 10.0;	// Maximum acceleration in m/s2 of the car
+    		  double max_jerk = 10.0;	// Maximum jerk of the car in m/s3
+    		  double dt = 0.02;			// Time for 1 cycle
           int previous_lane = lane;
           
           double cur_car_speed = car_speed * 1.61/3.6;	// Convert from mph to m/s 
-          						// It's a little different with the ref_vel
+          						                                  // It's a little different with the ref_vel
+
           // FSM: KL, LCL, LCR
           double target_vel = max_vel;
           
@@ -133,20 +132,23 @@ int main() {
           
           for(auto ocar: sensor_fusion){
             //ocar: other car
-            //sensor_fusion: 0:id, 1:x, 2:y, 3:vx, 4:vy, 5:s, 6:d
-          	//cout << ocar << endl;
-            double ocar_d = ocar[6];            
+            //sensor_fusion: 0:id, 1:x, 2:y, 3:vx, 4:vy, 5:s, 6:d          
+            double ocar_x = ocar[1]; 
+            double ocar_y = ocar[2];            
+            double ocar_vx = ocar[3];
+            double ocar_vy = ocar[4];
+            double ocar_d = ocar[6];
+            double ocar_s = ocar[5]; 
+            double ocar_vel = sqrt(ocar_vx*ocar_vx + ocar_vy*ocar_vy)*1.61/3.6; // in m/s 
+
+            // Prediction of ocar's position in Frent
+            double ocar_pred_s = ocar_s + ocar_vel * dt;                           
             
             if (ocar_d < (lane*4+4) && ocar_d > (lane*4)){
               //Check if the ocar in the same lane with me
               
-              //cout << "Same lane; \n";
-              double ocar_s = ocar[5];
-              double ocar_vx = ocar[3];
-              double ocar_vy = ocar[4];
-              double ocar_vel = sqrt(ocar_vx*ocar_vx + ocar_vy*ocar_vy)*1.61/3.6; // in m/s
               
-              if (ocar_s < end_path_s+20 && ocar_s > car_s){
+              if (ocar_pred_s < end_path_s+20 && ocar_pred_s > car_s){
                 // Check my car is too close to the ocar.
                 // If the car is between my car and the end of the planning path+20
                 
@@ -188,9 +190,9 @@ int main() {
           
 	  // Velocity control
           if (ref_vel < target_vel){
-          	ref_vel += max_acc*dt*2;
+          	ref_vel += max_acc*dt;
           }else if(ref_vel > target_vel){
-          	ref_vel -= max_acc*dt*2;
+          	ref_vel -= max_acc*dt;
             cout << "Speed down --- ";
           }
          
