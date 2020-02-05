@@ -160,7 +160,7 @@ vector<bool> checkCL_feasibility(vector< vector<double> > sensor_fusion, double 
   // Check every lane's traffic
   // If no car's within car's safty distance range when changing lanes, set LC feasibility to 1
   double safty_dist_front = 30;
-  double safty_dist_back = 10;
+  double safty_dist_back = 20;
   
   vector<int> lane0_car;
   vector<int> lane1_car;
@@ -193,7 +193,7 @@ vector<bool> checkCL_feasibility(vector< vector<double> > sensor_fusion, double 
     }
     //
     CL_feasibility[0] = (lane0_car.size() == 0) && (lane != 0);
-	CL_feasibility[1] = (lane1_car.size() == 0) && (lane != 1);
+	  CL_feasibility[1] = (lane1_car.size() == 0) && (lane != 1);
     CL_feasibility[2] = (lane2_car.size() == 0) && (lane != 2);
 	
     
