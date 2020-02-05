@@ -172,11 +172,18 @@ vector<bool> checkCL_feasibility(vector< vector<double> > sensor_fusion, double 
   	//sensor_fusion: 0:id, 1:x, 2:y, 3:vx, 4:vy, 5:s, 6:d
     //sensor_fusion.size always equals 12
     
-    double ocar_s = ocar[5];
+    double ocar_x = ocar[1]; 
+    double ocar_y = ocar[2];            
+    double ocar_vx = ocar[3];
+    double ocar_vy = ocar[4];
     double ocar_d = ocar[6];
-    //cout << "car_s: " << car_s << "\tocar_s" << ocar_s << endl;
+    double ocar_s = ocar[5]; 
+    double ocar_vel = sqrt(ocar_vx*ocar_vx + ocar_vy*ocar_vy)*1.61/3.6; // in m/s 
+    double dt = 0.02;
+    double ocar_pred_s = ocar_s + ocar_vel * dt; 
     
-    if(ocar_s>car_s-safty_dist_back && ocar_s<car_s+safty_dist_front){
+
+    if(ocar_pred_s>car_s-safty_dist_back && ocar_pred_s<car_s+safty_dist_front){
       // cars within safty LC distance
       if(ocar_d>=0 && ocar_d<4){
       	// Lane 0
