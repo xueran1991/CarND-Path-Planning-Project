@@ -12,7 +12,7 @@ The car follow each one the waypoints in every cycle. The car's velocity, accele
 
 Ways points are in global Cartesian coordinate. 5 anchor points are convert from Frenet to global Cartesian coordinate. Then I use the spline to interpolate other waypoints. The x increasement of each waypoint is how far the car should move in one cycle. That's car's wanted velocity times 0.02s.
 
-The max jerk is 10m/s3 and the max acceleration is 10m/s2. My thought is make the car's accelerate change with the max jerk and make the car's velocity change with the acceleration(acceleration += max jerk * dt, velocity += acceleration * dt, dt=0.2s). However, when I implemented this, the simulator showed jerk was only around 1m/s3 when the car in the same lane. At last I change the code to let the car speed up or down at 0.02 * 10 * 2 m/s2, the car can still go within the jerk limit.
+The max jerk is 10m/s3 and the max acceleration is 10m/s2. My thought is to make the car's accelerate change with the max jerk and make the car's velocity change with the acceleration(acceleration += max jerk * dt, velocity += acceleration * dt, dt=0.2s). 
 
 #### 2. Determine to keep lane, lane change left or lane change right
 
